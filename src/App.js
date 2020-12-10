@@ -1,23 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+/** @format */
+
+import React, { useEffect } from "react";
+import SignUp from "./SignUp";
+import SignIn from "./SignIn";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import TaskBoard from "./TaskBoard";
+import "./App.css";
+import { auth } from "./firebase";
+import { useStateValue } from "./StateProvider";
 
 function App() {
+  const [{}, dispatch] = useStateValue();
+
+  useEffect(() => {
+    auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        //the user is/was logged in
+        dispatch({
+          type: "SET_USER",
+          user: authUser,
+        });
+      } else {
+        //user logged out
+        dispatch({
+          type: "SET_USER",
+          user: null,
+        });
+      }
+    });
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={SignUp} />
+          <Route exact path="/signin" component={SignIn} />
+          <Route exact path="/taskboard" component={TaskBoard} />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }

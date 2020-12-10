@@ -1,0 +1,32 @@
+/** @format */
+
+.list-items {
+  display: flex;
+  flex-direction: row;
+  width: 92%;
+  background-color: rgba(2, 39, 76, 0.53);
+  height: 50px;
+  margin: 15px auto;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.text {
+  display: flex;
+  flex: 1;
+}
+
+.text p {
+  padding: 12px;
+  color: white;
+}
+
+.text > .MuiSvgIcon-root {
+  color: white;
+  padding: 12px;
+}
+
+.edit-delete > .MuiSvgIcon-root {
+  color: white;
+  padding: 12px;
+}
